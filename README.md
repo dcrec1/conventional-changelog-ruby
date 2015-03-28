@@ -1,26 +1,25 @@
 # Conventional::Changelog
 
-TODO: Write a gem description
+Generates a CHANGELOG.md file from Git metadata, using the AngularJS commit conventions.
+
+- [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/)
+
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'conventional-changelog'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
     $ gem install conventional-changelog
+
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ conventional-changelog
+
+or programatically:
+
+```ruby
+require 'conventional_changelog'
+ConventionalChangelog::Generator.new.generate!
+```
 
 ## Contributing
 
