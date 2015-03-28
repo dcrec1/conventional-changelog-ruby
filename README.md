@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/dcrec1/conventional-changelog-ruby.svg?branch=master)](https://travis-ci.org/dcrec1/conventional-changelog-ruby)
+[![Code Climate](https://codeclimate.com/github/dcrec1/conventional-changelog-ruby/badges/gpa.svg)](https://codeclimate.com/github/dcrec1/conventional-changelog-ruby)
+[![Test Coverage](https://codeclimate.com/github/dcrec1/conventional-changelog-ruby/badges/coverage.svg)](https://codeclimate.com/github/dcrec1/conventional-changelog-ruby)
+
 # Conventional::Changelog
 
 Generates a CHANGELOG.md file from Git metadata using the AngularJS commit conventions.
