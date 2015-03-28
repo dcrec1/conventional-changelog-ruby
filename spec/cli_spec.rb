@@ -1,0 +1,108 @@
+require 'spec_helper'
+
+describe ConventionalChangelog::CLI do
+  describe ".execute" do
+    context "with no commits" do
+      before :each do
+        allow(ConventionalChangelog::Git).to receive(:log).and_return ""
+      end
+
+      it 'creates an empty changelog when no commits' do
+        ConventionalChangelog::CLI.execute
+        expect(File.open("CHANGELOG.md").read).to eql "\n"
+      end
+    end
+
+    context "with multiple commits" do
+      before :each do
+        log = <<-LOG
+4303fd4/////2015-03-30/////feat(admin): increase reports ranges
+4303fd5/////2015-03-30/////fix(api): fix annoying bug
+4303fd6/////2015-03-28/////feat(api): add cool service
+4303fd7/////2015-03-28/////feat(api): add cool feature
+4303fd8/////2015-03-28/////feat(admin): add page to manage users
+        LOG
+        allow(ConventionalChangelog::Git).to receive(:log).and_return log
+      end
+
+      it 'parses simple lines into dates' do
+        ConventionalChangelog::CLI.execute
+        body = <<-BODY
+<a name="2015-03-30"></a>
+### 2015-03-30
+
+
+#### Features
+
+* **admin**
+  * increase reports ranges (4303fd4)
+
+
+#### Bug Fixes
+
+* **api**
+  * fix annoying bug (4303fd5)
+
+
+<a name="2015-03-28"></a>
+### 2015-03-28
+
+
+#### Features
+
+* **api**
+  * add cool service (4303fd6)
+  * add cool feature (4303fd7)
+
+* **admin**
+  * add page to manage users (4303fd8)
+
+
+
+        BODY
+        expect(File.open("CHANGELOG.md").read).to eql body
+      end
+
+      it 'preserves previous changes' do
+        previous_body = <<-BODY
+<a name="2015-03-28"></a>
+### 2015-03-28
+
+
+#### Features
+
+* **api**
+  * add cool service (4303fd6)
+  * add cool feature (4303fd7)
+
+* **admin**
+  * add page to manage users (4303fd8)
+
+        BODY
+        File.open("CHANGELOG.md", "w") { |f| f.puts previous_body }
+        body = <<-BODY
+<a name="2015-03-30"></a>
+### 2015-03-30
+
+
+#### Features
+
+* **admin**
+  * increase reports ranges (4303fd4)
+
+
+#### Bug Fixes
+
+* **api**
+  * fix annoying bug (4303fd5)
+
+
+#{previous_body}
+
+        BODY
+        ConventionalChangelog::CLI.execute
+        expect(File.open("CHANGELOG.md").read).to eql body
+      end
+    end
+  end
+end
