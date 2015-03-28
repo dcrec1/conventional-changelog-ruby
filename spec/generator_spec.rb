@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe ConventionalChangelog::CLI do
-  describe ".execute" do
+describe ConventionalChangelog::Generator do
+  describe "#generate!" do
     context "with no commits" do
       before :each do
         allow(ConventionalChangelog::Git).to receive(:log).and_return ""
       end
 
       it 'creates an empty changelog when no commits' do
-        ConventionalChangelog::CLI.execute
+        subject.generate!
         expect(File.open("CHANGELOG.md").read).to eql "\n"
       end
     end
@@ -26,7 +26,7 @@ describe ConventionalChangelog::CLI do
       end
 
       it 'parses simple lines into dates' do
-        ConventionalChangelog::CLI.execute
+        subject.generate!
         body = <<-BODY
 <a name="2015-03-30"></a>
 ### 2015-03-30
@@ -100,7 +100,7 @@ describe ConventionalChangelog::CLI do
 #{previous_body}
 
         BODY
-        ConventionalChangelog::CLI.execute
+        subject.generate!
         expect(File.open("CHANGELOG.md").read).to eql body
       end
     end
