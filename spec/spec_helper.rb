@@ -3,4 +3,8 @@ CodeClimate::TestReporter.start
 require 'conventional_changelog'
 require 'pp'
 require 'fakefs'
-FakeFS.activate!
+
+RSpec.configure do |config|
+  config.before(:all) { FakeFS.activate! }
+  config.after(:all) { FakeFS.deactivate! }
+end
