@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'conventional_changelog'
+require 'conventional_changelog/cli'
+
+ConventionalChangelog::CLI.execute
