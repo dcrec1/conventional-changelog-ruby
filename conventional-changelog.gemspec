@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ConventionalChangelog::VERSION
   spec.authors       = ["Diego Carrion"]
   spec.email         = ["dc.rec1@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Ruby binary to generate a conventional changelog — Edit}
+  spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
