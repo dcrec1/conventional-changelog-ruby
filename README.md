@@ -1,6 +1,6 @@
 # Conventional::Changelog
 
-Generates a CHANGELOG.md file from Git metadata, using the AngularJS commit conventions.
+Generates a CHANGELOG.md file from Git metadata using the AngularJS commit conventions.
 
 - [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/)
 
@@ -20,6 +20,47 @@ or programatically:
 require 'conventional_changelog'
 ConventionalChangelog::Generator.new.generate!
 ```
+
+## Examples
+
+Converts this:
+
+    2015-03-30 feat(admin): increase reports ranges
+    2015-03-30 fix(api): fix annoying bug
+    2015-03-28 feat(api): add cool service
+    2015-03-28 feat(api): add cool feature
+    2015-03-28 feat(admin): add page to manage users
+
+into this:
+
+    <a name="2015-03-30"></a>
+    ### 2015-03-30
+    
+    
+    #### Features
+    
+    * **admin**
+      * increase reports ranges (4303fd4)
+    
+    
+    #### Bug Fixes
+    
+    * **api**
+      * fix annoying bug (4303fd5)
+    
+    
+    <a name="2015-03-28"></a>
+    ### 2015-03-28
+    
+    
+    #### Features
+    
+    * **api**
+      * add cool service (4303fd6)
+      * add cool feature (4303fd7)
+    
+    * **admin**
+      * add page to manage users (4303fd8)
 
 ## Contributing
 
