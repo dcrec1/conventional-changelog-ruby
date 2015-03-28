@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe ConventionalChangelog::Generator do
+  it 'runs clean' do
+    expect { subject.generate! }.to_not raise_exception  
+  end
+
   describe "#generate!" do
     context "with no commits" do
       before :each do
