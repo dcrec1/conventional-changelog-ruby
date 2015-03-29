@@ -29,9 +29,10 @@ describe ConventionalChangelog::Generator do
         allow(ConventionalChangelog::Git).to receive(:log).and_return log
       end
 
-      it 'parses simple lines into dates' do
-        subject.generate!
-        body = <<-BODY
+      context "without a version param" do
+        it 'parses simple lines into dates' do
+          subject.generate!
+          body = <<-BODY
 <a name="2015-03-30"></a>
 ### 2015-03-30
 
@@ -63,12 +64,12 @@ describe ConventionalChangelog::Generator do
 
 
 
-        BODY
-        expect(File.open("CHANGELOG.md").read).to eql body
-      end
+          BODY
+          expect(File.open("CHANGELOG.md").read).to eql body
+        end
 
-      it 'preserves previous changes' do
-        previous_body = <<-BODY
+        it 'preserves previous changes' do
+          previous_body = <<-BODY
 <a name="2015-03-28"></a>
 ### 2015-03-28
 
@@ -82,9 +83,9 @@ describe ConventionalChangelog::Generator do
 * **admin**
   * add page to manage users (4303fd8)
 
-        BODY
-        File.open("CHANGELOG.md", "w") { |f| f.puts previous_body }
-        body = <<-BODY
+          BODY
+          File.open("CHANGELOG.md", "w") { |f| f.puts previous_body }
+          body = <<-BODY
 <a name="2015-03-30"></a>
 ### 2015-03-30
 
@@ -103,9 +104,10 @@ describe ConventionalChangelog::Generator do
 
 #{previous_body}
 
-        BODY
-        subject.generate!
-        expect(File.open("CHANGELOG.md").read).to eql body
+          BODY
+          subject.generate!
+          expect(File.open("CHANGELOG.md").read).to eql body
+        end
       end
     end
   end
