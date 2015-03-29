@@ -30,7 +30,7 @@ module ConventionalChangelog
         puts "#### #{title}", ""
         type_commits.group_by { |commit| commit[:component] }.each do |component, commits|
           puts "* **#{component}**"
-          commits.each { |commit| puts "  * #{commit[:change]} ([#{commit[:id]}](/commit/#{commit[:id]}))" }
+          commits.each { |commit| puts "  * #{commit[:change]} ([#{commit[:id]}](/../../commit/#{commit[:id]}))" }
           puts ""
         end
         puts ""
