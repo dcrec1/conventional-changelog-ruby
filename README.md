@@ -17,13 +17,17 @@ Generates a CHANGELOG.md file from Git metadata using the AngularJS commit conve
 ## Usage
 
     $ conventional-changelog
+    $ conventional-changelog version=vX.Y.Z
 
 or programatically:
 
 ```ruby
 require 'conventional_changelog'
 ConventionalChangelog::Generator.new.generate!
+ConventionalChangelog::Generator.new.generate! version: "vX.Y.Z"
 ```
+
+Version param should follow your Git tags format
 
 ## Examples
 
