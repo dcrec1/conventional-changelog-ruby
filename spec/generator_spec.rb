@@ -46,13 +46,13 @@ describe ConventionalChangelog::Generator do
 #### Features
 
 * **admin**
-  * increase reports ranges (4303fd4)
+  * increase reports ranges ([4303fd4](/commit/4303fd4))
 
 
 #### Bug Fixes
 
 * **api**
-  * fix annoying bug (4303fd5)
+  * fix annoying bug ([4303fd5](/commit/4303fd5))
 
 
 <a name="2015-03-28"></a>
@@ -62,11 +62,11 @@ describe ConventionalChangelog::Generator do
 #### Features
 
 * **api**
-  * add cool service (4303fd6)
-  * add cool feature (4303fd7)
+  * add cool service ([4303fd6](/commit/4303fd6))
+  * add cool feature ([4303fd7](/commit/4303fd7))
 
 * **admin**
-  * add page to manage users (4303fd8)
+  * add page to manage users ([4303fd8](/commit/4303fd8))
 
 
 
@@ -98,13 +98,13 @@ describe ConventionalChangelog::Generator do
 #### Features
 
 * **admin**
-  * increase reports ranges (4303fd4)
+  * increase reports ranges ([4303fd4](/commit/4303fd4))
 
 
 #### Bug Fixes
 
 * **api**
-  * fix annoying bug (4303fd5)
+  * fix annoying bug ([4303fd5](/commit/4303fd5))
 
 
 #{previous_body}
@@ -145,13 +145,13 @@ describe ConventionalChangelog::Generator do
 #### Features
 
 * **admin**
-  * increase reports ranges (4303fd4)
+  * increase reports ranges ([4303fd4](/commit/4303fd4))
 
 
 #### Bug Fixes
 
 * **api**
-  * fix annoying bug (4303fd5)
+  * fix annoying bug ([4303fd5](/commit/4303fd5))
 
 
 #{previous_body}
