@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'conventional_changelog'
-ConventionalChangelog::Generator.new.generate!
+require 'conventional_changelog/cli'
+ConventionalChangelog::CLI.execute ARGV
