@@ -4,8 +4,8 @@ module ConventionalChangelog
 
     def self.commits(options)
       log(options).split("\n").map { |commit| commit.split DELIMITER }.select { |commit| options[:since_date].nil? or commit[1] > options[:since_date] }.map do |commit|
-        comment = commit[2].match(/(.*)\((.*)\): (.*)/)
-        { id: commit[0], date: commit[1], type: comment[1], component: comment[2], change: comment[3] }
+        comment = commit[2].match(/(\w*)(\(([\w\$\.\-\* ]*)\))?\: (.*)/)
+        { id: commit[0], date: commit[1], type: comment[1], component: comment[3], change: comment[4] }
       end
     end
 
