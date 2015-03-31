@@ -7,7 +7,7 @@ describe ConventionalChangelog::Generator do
     end
 
     it 'runs clean' do
-      expect { subject.generate! }.to_not raise_exception  
+      expect { subject.generate! }.to_not raise_exception
     end
 
     context "with no commits" do
@@ -35,6 +35,7 @@ describe ConventionalChangelog::Generator do
 4303fd8/////2015-03-28/////feat(admin): add page to manage users
           LOG
         end
+
 
         it 'parses simple lines into dates' do
           subject.generate!
@@ -160,6 +161,37 @@ describe ConventionalChangelog::Generator do
           expect(File.open("CHANGELOG.md").read + "\n").to eql body
         end
       end
+
+      context "with no scope" do
+        let(:log) do <<-LOG
+4303fd4/////2015-03-30/////feat: increase reports ranges
+4303fd5/////2015-03-30/////fix: fix annoying bug
+          LOG
+        end
+
+        it 'creates changelog without scope' do
+          subject.generate!
+          body = <<-BODY
+<a name="2015-03-30"></a>
+### 2015-03-30
+
+
+#### Features
+
+* increase reports ranges ([4303fd4](/../../commit/4303fd4))
+
+
+#### Bug Fixes
+
+* fix annoying bug ([4303fd5](/../../commit/4303fd5))
+
+
+
+          BODY
+          expect(File.open("CHANGELOG.md").read).to eql body
+        end
+      end
+
     end
   end
 end
