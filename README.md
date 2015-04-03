@@ -8,7 +8,7 @@ Generates a CHANGELOG.md file from Git metadata using the AngularJS commit conve
 
 - [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/)
 
-Since version 1.2.0, the scopes are optional.
+Since version 1.2.0 the scopes are optional.
 
 
 ## Installation
