@@ -1,3 +1,13 @@
+<a name="v1.2.0"></a>
+### v1.2.0 (2015-03-31)
+
+
+#### Features
+
+* **output**
+  * support commits without scope	 ([3b127d7](/../../commit/3b127d7))
+
+
 <a name="v1.1.0"></a>
 ### v1.1.0 (2015-03-29)
 
