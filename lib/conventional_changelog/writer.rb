@@ -29,16 +29,16 @@ module ConventionalChangelog
       unless (type_commits = commits.select { |commit| commit[:type] == type }).empty?
         puts "#### #{title}", ""
         type_commits.group_by { |commit| commit[:component] }.each do |component, commits|
-          changeIndentation  = ""
-          if component
-            puts "* **#{component}**"
-            changeIndentation  = "  "
-          end
-          commits.each { |commit| puts "#{changeIndentation}* #{commit[:change]} ([#{commit[:id]}](/../../commit/#{commit[:id]}))" }
+          puts "* **#{component}**" if component
+          commits.each { |commit| write_commit commit, component }
           puts ""
         end
         puts ""
       end
+    end
+
+    def write_commit(commit, componentized)
+      puts "#{componentized ? '  ' : ''}* #{commit[:change]} ([#{commit[:id]}](/../../commit/#{commit[:id]}))"
     end
 
     def write_section(commits, id)
