@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["dc.rec1@gmail.com"]
   spec.summary       = %q{Ruby binary to generate a conventional changelog — Edit}
   spec.description   = %q{}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/dcrec1/conventional-changelog-ruby"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
