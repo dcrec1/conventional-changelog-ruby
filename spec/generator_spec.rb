@@ -11,6 +11,7 @@ describe ConventionalChangelog::Generator do
     it 'runs clean' do
       expect { subject.generate! }.to_not raise_exception
       expect(changelog).to include "support commits without scope"
+      expect(changelog).to include "change mocked code to correctly return commits without scope"
     end
 
     context "with no commits" do
