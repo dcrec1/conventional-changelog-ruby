@@ -12,7 +12,7 @@ module ConventionalChangelog
     private
 
     def self.log(options)
-      `git log --pretty=format:'%h#{DELIMITER}%ad#{DELIMITER}%s%x09' --date=short --grep='^(feat|fix)\\(' -E #{version_filter(options)}`
+      `git log --pretty=format:"%h#{DELIMITER}%ad#{DELIMITER}%s%x09" --date=short --grep="^(feat|fix)(\\(.*\\))?:" -E #{version_filter(options)}`
     end
 
     def self.version_filter(options)

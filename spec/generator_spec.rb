@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe ConventionalChangelog::Generator do
+  let(:changelog) { File.open("CHANGELOG.md").read }
+
   describe "#generate!" do
     before :each do
       FileUtils.rm "CHANGELOG.md", force: true
@@ -8,6 +10,7 @@ describe ConventionalChangelog::Generator do
 
     it 'runs clean' do
       expect { subject.generate! }.to_not raise_exception
+      expect(changelog).to include "support commits without scope"
     end
 
     context "with no commits" do
@@ -17,7 +20,7 @@ describe ConventionalChangelog::Generator do
 
       it 'creates an empty changelog when no commits' do
         subject.generate!
-        expect(File.open("CHANGELOG.md").read).to eql "\n"
+        expect(changelog).to eql "\n"
       end
     end
 
@@ -72,7 +75,7 @@ describe ConventionalChangelog::Generator do
 
 
           BODY
-          expect(File.open("CHANGELOG.md").read).to eql body
+          expect(changelog).to eql body
         end
 
         it 'preserves previous changes' do
@@ -111,7 +114,7 @@ describe ConventionalChangelog::Generator do
 #{previous_body}
           BODY
           subject.generate!
-          expect(File.open("CHANGELOG.md").read + "\n").to eql body
+          expect(changelog + "\n").to eql body
         end
       end
 
@@ -158,7 +161,7 @@ describe ConventionalChangelog::Generator do
 #{previous_body}
           BODY
           subject.generate! version: '0.2.0'
-          expect(File.open("CHANGELOG.md").read + "\n").to eql body
+          expect(changelog + "\n").to eql body
         end
       end
 
@@ -188,7 +191,7 @@ describe ConventionalChangelog::Generator do
 
 
           BODY
-          expect(File.open("CHANGELOG.md").read).to eql body
+          expect(changelog).to eql body
         end
       end
 
