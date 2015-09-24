@@ -28,9 +28,9 @@ module ConventionalChangelog
     def append_changes(commits, type, title)
       unless (type_commits = commits.select { |commit| commit[:type] == type }).empty?
         puts "#### #{title}", ""
-        type_commits.group_by { |commit| commit[:component] }.each do |component, commits|
+        type_commits.group_by { |commit| commit[:component] }.each do |component, component_commits|
           puts "* **#{component}**" if component
-          commits.each { |commit| write_commit commit, component }
+          component_commits.each { |commit| write_commit commit, component }
           puts ""
         end
         puts ""
