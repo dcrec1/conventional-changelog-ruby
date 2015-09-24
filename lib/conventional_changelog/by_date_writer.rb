@@ -7,7 +7,7 @@ module ConventionalChangelog
     end
 
     def write_new_lines(options)
-      commits.group_by { |commit| commit[:date] }.sort.reverse.each do |date, commits|
+      commits.group_by { |commit| commit[:date] }.sort.reverse_each do |date, commits|
         write_section commits, date
       end
     end
