@@ -4,7 +4,6 @@ module ConventionalChangelog
       Generator.new.generate! parse(params)
     end
 
-    private
     def self.parse(params)
       Hash[*params.map { |param| param.split("=") }.map { |key, value| [key.to_sym, value] }.flatten]
     end
