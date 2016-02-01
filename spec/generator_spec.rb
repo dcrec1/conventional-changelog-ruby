@@ -25,6 +25,38 @@ describe ConventionalChangelog::Generator do
       end
     end
 
+    context "with merge commit" do
+      before :each do
+        allow(ConventionalChangelog::Git).to receive(:log).and_return log
+      end
+
+      context "skip merged commit" do
+        let(:log) do <<-LOG
+4303fd4/////2015-03-30/////feat(admin): increase reports ranges
+430fa51/////2015-03-31/////Merge branch 'develop' into 'master'
+          LOG
+        end
+
+        it 'does not contain merge commit' do
+          subject.generate!
+          body = <<-BODY
+<a name="2015-03-30"></a>
+### 2015-03-30
+
+
+#### Features
+
+* **admin**
+  * increase reports ranges ([4303fd4](/../../commit/4303fd4))
+
+
+
+          BODY
+          expect(changelog).to eql body
+        end
+      end
+    end
+
     context "with multiple commits" do
       before :each do
         allow(ConventionalChangelog::Git).to receive(:log).and_return log
