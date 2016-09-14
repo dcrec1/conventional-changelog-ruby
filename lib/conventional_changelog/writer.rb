@@ -42,6 +42,8 @@ module ConventionalChangelog
     end
 
     def write_section(commits, id)
+      return if commits.empty?
+
       puts version_header(id)
       append_changes commits, "feat", "Features"
       append_changes commits, "fix", "Bug Fixes"
