@@ -229,5 +229,14 @@ describe ConventionalChangelog::Generator do
       end
 
     end
+
+    context "with unexpected errors" do
+      it "keeps the original changelog" do
+        File.write("CHANGELOG.md", "original")
+        expect { subject.generate! }.to raise_exception NoMethodError
+
+        expect(changelog).to eql "original"
+      end
+    end
   end
 end
