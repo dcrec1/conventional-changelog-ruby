@@ -1,13 +1,16 @@
 module ConventionalChangelog
   class Writer < File
     def initialize(file_name)
-      @previous_body = File.open(file_name, "a+").read
-      super file_name, "w"
+      FileUtils.touch file_name
+      super file_name, 'r+'
+
+      @previous_body = read
     end
 
     def write!(options)
+      seek 0
       write_new_lines options
-      self.puts @previous_body
+      puts @previous_body
     end
 
     private
@@ -42,6 +45,8 @@ module ConventionalChangelog
     end
 
     def write_section(commits, id)
+      return if commits.empty?
+
       puts version_header(id)
       append_changes commits, "feat", "Features"
       append_changes commits, "fix", "Bug Fixes"

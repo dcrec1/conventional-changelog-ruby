@@ -1,3 +1,5 @@
+require 'open3'
+
 module ConventionalChangelog
   class Git
     DELIMITER = "/////"
@@ -11,7 +13,18 @@ module ConventionalChangelog
     end
 
     def self.log(options)
-      `git log --pretty=format:"%h#{DELIMITER}%ad#{DELIMITER}%s%x09" --date=short --grep="^(feat|fix)(\\(.*\\))?:" -E #{version_filter(options)}`
+      output, status = Open3.capture2(%Q{
+        git log \
+          --pretty=format:"%h#{DELIMITER}%ad#{DELIMITER}%s%x09" --date=short \
+          --grep="^(feat|fix)(\\(.*\\))?:" -E \
+          #{version_filter(options)}
+      })
+
+      if status.success?
+        output
+      else
+        raise "Can't load Git commits, check your arguments"
+      end
     end
 
     def self.version_filter(options)
