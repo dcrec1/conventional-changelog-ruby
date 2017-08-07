@@ -230,12 +230,27 @@ describe ConventionalChangelog::Generator do
 
     end
 
-    context "with unexpected errors" do
-      it "keeps the original changelog" do
-        File.write("CHANGELOG.md", "original")
-        expect { subject.generate! }.to raise_exception NoMethodError
+    context "when the tag or date of the previous release cannot be determined from the existing CHANGELOG" do
+      context "when the CONVENTIONAL_CHANGELOG_LAST_RELEASE environment variable is not set" do
+        it "raises a helpful error" do
+          File.write("CHANGELOG.md", "original")
+          expect { subject.generate! version: "v2.0.0" }.to raise_error(ConventionalChangelog::LastReleaseNotFound, /Could not determine last tag or release date/)
+        end
+      end
 
-        expect(changelog).to eql "original"
+      context "when the CONVENTIONAL_CHANGELOG_LAST_RELEASE environment variable is set" do
+        before do
+          allow(ENV).to receive(:[]).with('CONVENTIONAL_CHANGELOG_LAST_RELEASE').and_return('v1.2.3')
+          allow(ConventionalChangelog::Git).to receive(:log).and_return log
+        end
+
+        let(:log) { "4303fd4/////2015-03-30/////feat: increase reports ranges" }
+
+        it "uses the value of CONVENTIONAL_CHANGELOG_LAST_RELEASE as the last release id" do
+          File.write("CHANGELOG.md", "original")
+          expect(ConventionalChangelog::Git).to receive(:commits).with(since_version: 'v1.2.3').and_call_original
+          subject.generate! version: "v2.0.0"
+        end
       end
     end
   end

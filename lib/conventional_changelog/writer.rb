@@ -1,4 +1,18 @@
 module ConventionalChangelog
+
+  class LastReleaseNotFound < StandardError
+    MESSAGE = <<-EOM
+Could not determine last tag or release date from existing CHANGELOG.md.
+Please specify the last tag (eg. v1.2.3) or release date (eg. 2016-02-14)
+manually by setting the environment variable CONVENTIONAL_CHANGELOG_LAST_RELEASE
+and running the generate command again.
+    EOM
+
+    def initialize message = MESSAGE
+      super(message)
+    end
+  end
+
   class Writer < File
     def initialize(file_name)
       FileUtils.touch file_name
@@ -53,7 +67,16 @@ module ConventionalChangelog
     end
 
     def last_id
-      @previous_body.to_s == "" ? nil : @previous_body.split("\n")[0].to_s.match(/"(.*)"/)[1]
+      return nil if @previous_body.to_s.length == 0
+      matches = @previous_body.split("\n")[0].to_s.match(/"(.*)"/)
+
+      if matches
+        matches[1]
+      elsif manually_set_id = ENV['CONVENTIONAL_CHANGELOG_LAST_RELEASE']
+        manually_set_id
+      else
+        raise LastReleaseNotFound.new
+      end
     end
   end
 end
