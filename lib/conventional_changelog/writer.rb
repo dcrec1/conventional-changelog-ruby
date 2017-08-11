@@ -1,3 +1,5 @@
+require 'stringio'
+
 module ConventionalChangelog
 
   class LastReleaseNotFound < StandardError
@@ -18,12 +20,14 @@ and running the generate command again.
       FileUtils.touch file_name
       super file_name, 'r+'
 
+      @new_body = StringIO.new
       @previous_body = read
     end
 
     def write!(options)
+      build_new_lines options
       seek 0
-      write_new_lines options
+      write @new_body.string
       write @previous_body
     end
 
@@ -44,24 +48,24 @@ and running the generate command again.
 
     def append_changes(commits, type, title)
       unless (type_commits = commits.select { |commit| commit[:type] == type }).empty?
-        puts "#### #{title}", ""
+        @new_body.puts "#### #{title}", ""
         type_commits.group_by { |commit| commit[:component] }.each do |component, component_commits|
-          puts "* **#{component}**" if component
+          @new_body.puts "* **#{component}**" if component
           component_commits.each { |commit| write_commit commit, component }
-          puts ""
+          @new_body.puts ""
         end
-        puts ""
+        @new_body.puts ""
       end
     end
 
     def write_commit(commit, componentized)
-      puts "#{componentized ? '  ' : ''}* #{commit[:change]} ([#{commit[:id]}](/../../commit/#{commit[:id]}))"
+      @new_body.puts "#{componentized ? '  ' : ''}* #{commit[:change]} ([#{commit[:id]}](/../../commit/#{commit[:id]}))"
     end
 
     def write_section(commits, id)
       return if commits.empty?
 
-      puts version_header(id)
+      @new_body.puts version_header(id)
       append_changes commits, "feat", "Features"
       append_changes commits, "fix", "Bug Fixes"
     end

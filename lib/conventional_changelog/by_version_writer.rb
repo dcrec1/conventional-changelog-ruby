@@ -6,7 +6,7 @@ module ConventionalChangelog
       :since_version
     end
 
-    def write_new_lines(options)
+    def build_new_lines(options)
       write_section commits, options[:version]
     end
 
