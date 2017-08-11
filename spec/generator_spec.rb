@@ -21,7 +21,7 @@ describe ConventionalChangelog::Generator do
 
       it 'creates an empty changelog when no commits' do
         subject.generate!
-        expect(changelog).to eql "\n"
+        expect(changelog).to eql ""
       end
     end
 
@@ -48,7 +48,6 @@ describe ConventionalChangelog::Generator do
 
 * **admin**
   * increase reports ranges ([4303fd4](/../../commit/4303fd4))
-
 
 
           BODY
@@ -104,7 +103,6 @@ describe ConventionalChangelog::Generator do
 
 * **admin**
   * add page to manage users ([4303fd8](/../../commit/4303fd8))
-
 
 
           BODY
@@ -220,7 +218,6 @@ describe ConventionalChangelog::Generator do
 #### Bug Fixes
 
 * fix annoying bug ([4303fd5](/../../commit/4303fd5))
-
 
 
           BODY

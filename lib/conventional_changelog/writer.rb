@@ -24,7 +24,7 @@ and running the generate command again.
     def write!(options)
       seek 0
       write_new_lines options
-      puts @previous_body
+      write @previous_body
     end
 
     private
