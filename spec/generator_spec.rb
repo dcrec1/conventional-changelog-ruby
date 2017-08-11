@@ -250,5 +250,17 @@ describe ConventionalChangelog::Generator do
         end
       end
     end
+
+    context "when an error occurs generating the commit log" do
+      before do
+        allow_any_instance_of(ConventionalChangelog::Writer).to receive(:append_changes).and_raise("an error")
+      end
+
+      it "maintains the original content" do
+        File.write("CHANGELOG.md", '<a name="v1.0.0"></a>')
+        expect { subject.generate! version: "v2.0.0" }.to raise_error(RuntimeError)
+        expect(File.read("CHANGELOG.md")).to eq '<a name="v1.0.0"></a>'
+      end
+    end
   end
 end
