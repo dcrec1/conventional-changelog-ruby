@@ -1,3 +1,22 @@
+<a name="1.3.0"></a>
+### 1.3.0 (2017-08-11)
+
+
+#### Features
+
+* skip unrecognizable commits	 ([81dd517](/../../commit/81dd517))
+
+
+#### Bug Fixes
+
+* ensure original content of file is maintained on error	 ([75f0529](/../../commit/75f0529))
+* do not add an extra new line at end of existing content	 ([cf52241](/../../commit/cf52241))
+* Allow last release id to be specified manually	 ([558def0](/../../commit/558def0))
+* Avoid truncating original changelog on errors	 ([4421e2c](/../../commit/4421e2c))
+* Handle empty output from Git	 ([628565d](/../../commit/628565d))
+* change mocked code to correctly return commits without scope	 ([e1b9bf8](/../../commit/e1b9bf8))
+
+
 <a name="v1.2.0"></a>
 ### v1.2.0 (2015-03-31)
 
