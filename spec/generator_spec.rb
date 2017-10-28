@@ -43,12 +43,10 @@ describe ConventionalChangelog::Generator do
 <a name="2015-03-30"></a>
 ### 2015-03-30
 
-
 #### Features
 
 * **admin**
   * increase reports ranges ([4303fd4](/../../commit/4303fd4))
-
 
           BODY
           expect(changelog).to eql body
@@ -78,22 +76,18 @@ describe ConventionalChangelog::Generator do
 <a name="2015-03-30"></a>
 ### 2015-03-30
 
-
 #### Features
 
 * **admin**
   * increase reports ranges ([4303fd4](/../../commit/4303fd4))
-
 
 #### Bug Fixes
 
 * **api**
   * fix annoying bug ([4303fd5](/../../commit/4303fd5))
 
-
 <a name="2015-03-28"></a>
 ### 2015-03-28
-
 
 #### Features
 
@@ -104,7 +98,6 @@ describe ConventionalChangelog::Generator do
 * **admin**
   * add page to manage users ([4303fd8](/../../commit/4303fd8))
 
-
           BODY
           expect(changelog).to eql body
         end
@@ -113,7 +106,6 @@ describe ConventionalChangelog::Generator do
           previous_body = <<-BODY
 <a name="2015-03-28"></a>
 ### 2015-03-28
-
 
 #### Features
 
@@ -129,18 +121,15 @@ describe ConventionalChangelog::Generator do
 <a name="2015-03-30"></a>
 ### 2015-03-30
 
-
 #### Features
 
 * **admin**
   * increase reports ranges ([4303fd4](/../../commit/4303fd4))
 
-
 #### Bug Fixes
 
 * **api**
   * fix annoying bug ([4303fd5](/../../commit/4303fd5))
-
 
 #{previous_body}
           BODY
@@ -161,7 +150,6 @@ describe ConventionalChangelog::Generator do
 <a name="0.1.0"></a>
 ### 0.1.0 (2015-03-28)
 
-
 #### Features
 
 * **api**
@@ -176,18 +164,15 @@ describe ConventionalChangelog::Generator do
 <a name="0.2.0"></a>
 ### 0.2.0 (2015-03-30)
 
-
 #### Features
 
 * **admin**
   * increase reports ranges ([4303fd4](/../../commit/4303fd4))
 
-
 #### Bug Fixes
 
 * **api**
   * fix annoying bug ([4303fd5](/../../commit/4303fd5))
-
 
 #{previous_body}
           BODY
@@ -209,16 +194,13 @@ describe ConventionalChangelog::Generator do
 <a name="2015-03-30"></a>
 ### 2015-03-30
 
-
 #### Features
 
 * increase reports ranges ([4303fd4](/../../commit/4303fd4))
 
-
 #### Bug Fixes
 
 * fix annoying bug ([4303fd5](/../../commit/4303fd5))
-
 
           BODY
           expect(changelog).to eql body

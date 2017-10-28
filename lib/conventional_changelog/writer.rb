@@ -38,7 +38,6 @@ and running the generate command again.
 <a name="#{id}"></a>
 ### #{version_header_title(id)}
 
-
       HEADER
     end
 
@@ -54,7 +53,6 @@ and running the generate command again.
           component_commits.each { |commit| write_commit commit, component }
           @new_body.puts ""
         end
-        @new_body.puts ""
       end
     end
 
