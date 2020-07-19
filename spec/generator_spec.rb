@@ -244,5 +244,23 @@ describe ConventionalChangelog::Generator do
         expect(File.read("CHANGELOG.md")).to eq '<a name="v1.0.0"></a>'
       end
     end
+
+    context "with dry_run == true" do
+      before do
+        File.write("CHANGELOG.md", '<a name="v1.0.0"></a>')
+        allow($stdout).to receive(:puts)
+      end
+
+      let(:generate) { subject.generate!(version: "v2.0.0", dry_run: true) }
+
+      it "maintains the original content" do
+        expect { generate }.to_not change { File.read("CHANGELOG.md") }
+      end
+
+      it "prints the contents to stdout" do
+        expect($stdout).to receive(:puts).with(/#### Features/)
+        generate
+      end
+    end
   end
 end

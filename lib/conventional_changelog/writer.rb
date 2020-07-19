@@ -26,9 +26,14 @@ and running the generate command again.
 
     def write!(options)
       build_new_lines options
-      seek 0
-      write @new_body.string
-      write @previous_body
+      if options[:dry_run]
+        $stdout.puts(@new_body.string)
+        @new_body.string
+      else
+        seek 0
+        write @new_body.string
+        write @previous_body
+      end
     end
 
     private
