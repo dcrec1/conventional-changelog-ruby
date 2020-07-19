@@ -72,6 +72,13 @@ into this:
     * **admin**
       * add page to manage users (4303fd8)
 
+## Options
+
+* `version_headers`: prepend the commits with the version header(s). Default: `true`.
+* `anchors`: prepend the version headers with anchor tags. Default: `true`.
+* `force`: write a heading even if there are no commits found. Default: `false`.
+* `dry_run`: write the output to stdout rather than updating the CHANGELOG.md file. Useful for generating release notes. Default: `false`.
+
 ## Contributing
 
 1. Fork it ( https://github.com/dcrec1/conventional-changelog-ruby/fork )

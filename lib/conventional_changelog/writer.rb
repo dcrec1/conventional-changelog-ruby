@@ -26,17 +26,22 @@ and running the generate command again.
 
     def write!(options)
       build_new_lines options
-      seek 0
-      write @new_body.string
-      write @previous_body
+      if options[:dry_run]
+        $stdout.puts(@new_body.string.strip)
+        @new_body.string.strip
+      else
+        seek 0
+        write @new_body.string
+        write @previous_body
+      end
     end
 
     private
 
-    def version_header(id)
+    def version_header(id, options)
+      anchor = options[:anchors] ? "<a name=\"#{id}\"></a>\n" : ""
       <<-HEADER
-<a name="#{id}"></a>
-### #{version_header_title(id)}
+#{anchor}### #{version_header_title(id)}
 
       HEADER
     end
@@ -60,12 +65,15 @@ and running the generate command again.
       @new_body.puts "#{componentized ? '  ' : ''}* #{commit[:change]} ([#{commit[:id]}](/../../commit/#{commit[:id]}))"
     end
 
-    def write_section(commits, id)
-      return if commits.empty?
+    def write_section(commits, id, options)
+      if options[:version_headers]
+        @new_body.puts version_header(id, options)
+      end
 
-      @new_body.puts version_header(id)
-      append_changes commits, "feat", "Features"
-      append_changes commits, "fix", "Bug Fixes"
+      if commits.any?
+        append_changes commits, "feat", "Features"
+        append_changes commits, "fix", "Bug Fixes"
+      end
     end
 
     def last_id

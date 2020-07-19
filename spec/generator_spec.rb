@@ -19,9 +19,30 @@ describe ConventionalChangelog::Generator do
         allow(ConventionalChangelog::Git).to receive(:log).and_return ""
       end
 
-      it 'creates an empty changelog when no commits' do
-        subject.generate!
-        expect(changelog).to eql ""
+      context "when force is not true" do
+        it "creates an empty changelog when a version is set" do
+          subject.generate!(version: "0.2.0")
+          expect(changelog).to eql ""
+        end
+
+        it "creates an empty changelog when a version is not set" do
+          subject.generate!
+          expect(changelog).to eql ""
+        end
+      end
+
+      context "when force is true" do
+        let(:today) { Date.today.strftime("%Y-%m-%d") }
+
+        it "creates an empty changelog with a heading with today's date when a version is set" do
+          subject.generate!(version: "0.2.0", force: true)
+          expect(changelog).to eql "<a name=\"0.2.0\"></a>\n### 0.2.0 (#{today})\n\n"
+        end
+
+        it "creates an empty changelog with a heading with today's date when a version is not set" do
+          subject.generate!(force: true)
+          expect(changelog).to eql "<a name=\"#{today}\"></a>\n### #{today}\n\n"
+        end
       end
     end
 
@@ -242,6 +263,79 @@ describe ConventionalChangelog::Generator do
         File.write("CHANGELOG.md", '<a name="v1.0.0"></a>')
         expect { subject.generate! version: "v2.0.0" }.to raise_error(RuntimeError)
         expect(File.read("CHANGELOG.md")).to eq '<a name="v1.0.0"></a>'
+      end
+    end
+
+    context "with dry_run: true" do
+      before do
+        File.write("CHANGELOG.md", '<a name="v1.0.0"></a>')
+        allow($stdout).to receive(:puts)
+        allow(ConventionalChangelog::Git).to receive(:log).and_return log
+      end
+
+      let(:log) do <<-LOG
+4303fd4/////2015-03-30/////feat(foo): something
+        LOG
+      end
+
+      let(:generate) { subject.generate!(version: "v2.0.0", dry_run: true) }
+
+      it "maintains the original content" do
+        expect { generate }.to_not change { File.read("CHANGELOG.md") }
+      end
+
+      it "prints the contents to stdout" do
+        expect($stdout).to receive(:puts).with(/#### Features/)
+        generate
+      end
+
+    end
+
+    context "with version_headers: false" do
+      before do
+        allow($stdout).to receive(:puts)
+      end
+
+      context "with a version" do
+        let(:generate) { subject.generate!(version: "v2.0.0", dry_run: true, version_headers: false) }
+
+        it "does not include the version headings with a version" do
+          expect(generate).to start_with "#### Features"
+          expect(generate.scan(/#### Features/).count).to eq 1
+          expect(generate.scan(/#### Bug Fixes/).count).to eq 1
+        end
+      end
+
+      context "without a version" do
+        let(:generate) { subject.generate!(dry_run: true, version_headers: false) }
+
+        it "does not include the version headings with a version and does not group the commits" do
+          expect(generate).to start_with "#### Features"
+          expect(generate.scan(/#### Features/).count).to eq 1
+          expect(generate.scan(/#### Bug Fixes/).count).to eq 1
+        end
+      end
+    end
+
+    context "with anchors: false" do
+      before do
+        allow($stdout).to receive(:puts)
+      end
+
+      context "with a version" do
+        let(:generate) { subject.generate!(version: "v2.0.0", dry_run: true, anchors: false) }
+
+        it "does not include the anchors" do
+          expect(generate).to_not include "<a name"
+        end
+      end
+
+      context "without a version" do
+        let(:generate) { subject.generate!(dry_run: true, anchors: false) }
+
+        it "does not include the version headings with a version and does not group the commits" do
+          expect(generate).to_not include "<a name"
+        end
       end
     end
   end

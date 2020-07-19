@@ -1,3 +1,5 @@
+require 'date'
+
 module ConventionalChangelog
   class ByVersionWriter < Writer
     private
@@ -7,11 +9,14 @@ module ConventionalChangelog
     end
 
     def build_new_lines(options)
-      write_section commits, options[:version]
+      if commits.any? || options[:force]
+        write_section commits, options[:version], options
+      end
     end
 
     def version_header_title(id)
-      "#{id} (#{commits[0][:date]})"
+      date = commits.any? ? commits[0][:date] : Date.today.strftime("%Y-%m-%d")
+      "#{id} (#{date})"
     end
   end
 end
