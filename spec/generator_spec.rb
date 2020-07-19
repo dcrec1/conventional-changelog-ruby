@@ -266,10 +266,16 @@ describe ConventionalChangelog::Generator do
       end
     end
 
-    context "with dry_run == true" do
+    context "with dry_run: true" do
       before do
         File.write("CHANGELOG.md", '<a name="v1.0.0"></a>')
         allow($stdout).to receive(:puts)
+        allow(ConventionalChangelog::Git).to receive(:log).and_return log
+      end
+
+      let(:log) do <<-LOG
+4303fd4/////2015-03-30/////feat(foo): something
+        LOG
       end
 
       let(:generate) { subject.generate!(version: "v2.0.0", dry_run: true) }
