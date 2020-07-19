@@ -5,7 +5,15 @@ module ConventionalChangelog
     end
 
     def self.parse(params)
-      Hash[*params.map { |param| param.split("=") }.map { |key, value| [key.to_sym, value] }.flatten]
+      Hash[*params.map { |param| param.split("=") }.map { |key, value| [key.to_sym, parse_value(value)] }.flatten]
+    end
+
+    def self.parse_value(value)
+      case value
+      when 'true' then true
+      when 'false' then false
+      else value
+      end
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'date'
+
 module ConventionalChangelog
   class ByDateWriter < Writer
     private
@@ -7,8 +9,16 @@ module ConventionalChangelog
     end
 
     def build_new_lines(options)
-      commits.group_by { |commit| commit[:date] }.sort.reverse_each do |date, commits|
-        write_section commits, date
+      if commits.any?
+        if options[:version_headers]
+          commits.group_by { |commit| commit[:date] }.sort.reverse_each do |date, commits|
+            write_section commits, date, options
+          end
+        else
+          write_section commits, commits[0][:date], options
+        end
+      elsif options[:force]
+        write_section commits, Date.today.strftime("%Y-%m-%d"), options
       end
     end
 
